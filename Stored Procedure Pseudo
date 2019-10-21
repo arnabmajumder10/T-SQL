@@ -1,0 +1,36 @@
+USE [DataBaseName]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE ProcedureName
+AS
+BEGIN
+  BEGIN TRY
+    SET NOCOUNT ON;
+    ----------SQL Statements Here----------
+    
+    ----------In Application For Transaction Rollback----------
+    SELECT 'Success' AS ResultMsg
+  END TRY
+  
+  BEGIN CATCH
+    --DECLARE @ErrorNumber INT = ERROR_NUMBER();
+		--DECLARE @ErrorLine INT = ERROR_LINE();
+		DECLARE @ErrorMessage NVARCHAR(5000) = ERROR_MESSAGE();
+		--DECLARE @ErrorSeverity INT = ERROR_SEVERITY();
+		--DECLARE @ErrorState INT = ERROR_STATE();
+    ----------RAISERROR----------
+    --RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    ----------THROW----------
+    --THROW;
+    ----------Manually----------
+    --PRINT @ErrorMessage;
+    --PRINT @ErrorLine;
+    ----------In Application For Transaction Rollback----------
+    SELECT 'Error-'+@ErrorMessage AS ResultMsg
+  END CATCH
+END
+GO
